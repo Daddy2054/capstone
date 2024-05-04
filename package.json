@@ -5,17 +5,16 @@
     "minimatch": "^9.0.3"
   },
   "scripts": {
-    "build": "npx parcel build src/index.html --public-url https://github.com/Daddy2054/capstone.git && npx gh-pages -d dist",
+    "build": "npm install . && npm run clean && npx parcel build src/index.html --public-url https://github.com/Daddy2054/capstone.git && npx gh-pages -d dist",
     "lint": "npx eslint src/.",
     "test": "npx jest",
     "deploy": "npm run build && npx gh-pages -d dist",
     "ci": "npm run lint && npm run test && npm run deploy"
   },
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
-    "@parcel/transformer-sass": "^2.12.0",
-    "eslint": "^9.2.0",
     "eslint-config-standard": "^17.1.0",
+    "@parcel/transformer-sass": "^2.12.0",
+    "eslint": "^8.57.0",
     "globals": "^15.1.0",
     "jest-environment-jsdom": "^29.6.1"
   }
