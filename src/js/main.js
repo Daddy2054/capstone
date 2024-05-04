@@ -39,7 +39,7 @@ function toggleVisablity (id) {
     document.getElementById(id).style.visibility = 'visible'
   }
 }
-
+ 
 function Maze (Width, Height) {
   let mazeMap
   const width = Width
