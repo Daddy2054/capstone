@@ -1,11 +1,11 @@
-import $ from 'lodash'
-import shuffle from './shuffle'
+const $ = require('lodash')
+const shuffle = require('./shuffle')
 
-function rand(max) {
+function rand (max) {
   return Math.floor(Math.random() * max)
 }
 
-function changeBrightness(factor, sprite) {
+function changeBrightness (factor, sprite) {
   const virtCanvas = document.createElement('canvas')
   virtCanvas.width = 500
   virtCanvas.height = 500
@@ -27,12 +27,12 @@ function changeBrightness(factor, sprite) {
   return spriteOutput
 }
 
-function displayVictoryMess(moves) {
+function displayVictoryMess (moves) {
   document.getElementById('moves').innerHTML = `You Moved ${moves} Steps.`
   toggleVisablity('Message-Container')
 }
 
-function toggleVisablity(id) {
+function toggleVisablity (id) {
   if (document.getElementById(id).style.visibility == 'visible') {
     document.getElementById(id).style.visibility = 'hidden'
   } else {
@@ -40,7 +40,7 @@ function toggleVisablity(id) {
   }
 }
 
-function Maze(Width, Height) {
+function Maze (Width, Height) {
   let mazeMap
   const width = Width
   const height = Height
@@ -80,7 +80,7 @@ function Maze(Width, Height) {
     return endCoord
   }
 
-  function genMap() {
+  function genMap () {
     mazeMap = new Array(height)
     for (let y = 0; y < height; y++) {
       mazeMap[y] = new Array(width)
@@ -97,7 +97,7 @@ function Maze(Width, Height) {
     }
   }
 
-  function defineMaze() {
+  function defineMaze () {
     let isComp = false
     let move = false;
     let cellsVisited = 1
@@ -156,7 +156,7 @@ function Maze(Width, Height) {
     }
   }
 
-  function defineStartEnd() {
+  function defineStartEnd () {
     switch (rand(4)) {
       case 0:
         startCoord = {
@@ -206,7 +206,7 @@ function Maze(Width, Height) {
   defineMaze()
 }
 
-function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
+function DrawMaze (Maze, ctx, cellsize, endSprite = null) {
   const map = Maze.map()
   let cellSize = cellsize
   let drawEndMethod
@@ -219,7 +219,7 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
     drawEndMethod()
   }
 
-  function drawCell(xCord, yCord, cell) {
+  function drawCell (xCord, yCord, cell) {
     const x = xCord * cellSize
     const y = yCord * cellSize
 
@@ -249,7 +249,7 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
     }
   }
 
-  function drawMap() {
+  function drawMap () {
     for (let x = 0; x < map.length; x++) {
       for (let y = 0; y < map[x].length; y++) {
         drawCell(x, y, map[x][y])
@@ -257,7 +257,7 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
     }
   }
 
-  function drawEndFlag() {
+  function drawEndFlag () {
     const coord = Maze.endCoord()
     const gridSize = 4
     const fraction = cellSize / gridSize - 2
@@ -285,7 +285,7 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
     }
   }
 
-  function drawEndSprite() {
+  function drawEndSprite () {
     const offsetLeft = cellSize / 50
     const offsetRight = cellSize / 25
     const coord = Maze.endCoord()
@@ -302,7 +302,7 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
     )
   }
 
-  function clear() {
+  function clear () {
     const canvasSize = cellSize * map.length
     ctx.clearRect(0, 0, canvasSize, canvasSize)
   }
@@ -317,7 +317,7 @@ function DrawMaze(Maze, ctx, cellsize, endSprite = null) {
   drawEndMethod()
 }
 
-function Player(maze, c, _cellsize, onComplete, sprite = null) {
+function Player (maze, c, _cellsize, onComplete, sprite = null) {
   const ctx = c.getContext('2d')
   let drawSprite
   let moves = 0
@@ -339,7 +339,7 @@ function Player(maze, c, _cellsize, onComplete, sprite = null) {
     drawSpriteImg(cellCoords)
   }
 
-  function drawSpriteCircle(coord) {
+  function drawSpriteCircle (coord) {
     ctx.beginPath()
     ctx.fillStyle = 'yellow'
     ctx.arc(
@@ -356,7 +356,7 @@ function Player(maze, c, _cellsize, onComplete, sprite = null) {
     }
   }
 
-  function drawSpriteImg(coord) {
+  function drawSpriteImg (coord) {
     const offsetLeft = cellSize / 50
     const offsetRight = cellSize / 25
     ctx.drawImage(
@@ -376,7 +376,7 @@ function Player(maze, c, _cellsize, onComplete, sprite = null) {
     }
   }
 
-  function removeSprite(coord) {
+  function removeSprite (coord) {
     const offsetLeft = cellSize / 50
     const offsetRight = cellSize / 25
     ctx.clearRect(
@@ -387,7 +387,7 @@ function Player(maze, c, _cellsize, onComplete, sprite = null) {
     )
   }
 
-  function check(e) {
+  function check (e) {
     const cell = map[cellCoords.x][cellCoords.y]
     moves++
     switch (e.keyCode) {
@@ -441,41 +441,41 @@ function Player(maze, c, _cellsize, onComplete, sprite = null) {
   this.bindKeyDown = function () {
     window.addEventListener('keydown', check, false)
 
-      $('#view').swipe({
-        swipe: function (
-          event,
-          direction,
-          // distance,
-          // duration,
-          // fingerCount,
-          // fingerData
-        ) {
-          console.log(direction)
-          switch (direction) {
-            case 'up':
-              check({
-                keyCode: 38
-              })
-              break
-            case 'down':
-              check({
-                keyCode: 40
-              })
-              break
-            case 'left':
-              check({
-                keyCode: 37
-              })
-              break
-            case 'right':
-              check({
-                keyCode: 39
-              })
-              break
-          }
-        },
-        threshold: 0
-      })
+    $('#view').swipe({
+      swipe: function (
+        event,
+        direction,
+        // distance,
+        // duration,
+        // fingerCount,
+        // fingerData
+      ) {
+        console.log(direction)
+        switch (direction) {
+          case 'up':
+            check({
+              keyCode: 38
+            })
+            break
+          case 'down':
+            check({
+              keyCode: 40
+            })
+            break
+          case 'left':
+            check({
+              keyCode: 37
+            })
+            break
+          case 'right':
+            check({
+              keyCode: 39
+            })
+            break
+        }
+      },
+      threshold: 0
+    })
   }
 
   this.unbindKeyDown = function () {
@@ -524,7 +524,8 @@ window.onload = function () {
   sprite = new Image()
   sprite.src =
     'https://image.ibb.co/dr1HZy/Pf_RWr3_X_Imgur.png' +
-    `?${new Date().getTime()}`
+    `?${
+    new Date().getTime()}`
   sprite.setAttribute('crossOrigin', ' ')
   sprite.onload = function () {
     sprite = changeBrightness(1.2, sprite)
@@ -535,7 +536,8 @@ window.onload = function () {
 
   finishSprite = new Image()
   finishSprite.src = 'https://image.ibb.co/b9wqnJ/i_Q7m_U25_Imgur.png' +
-    `?${new Date().getTime()}`
+  `?${
+  new Date().getTime()}`
   finishSprite.setAttribute('crossOrigin', ' ')
   finishSprite.onload = function () {
     finishSprite = changeBrightness(1.1, finishSprite)
@@ -562,7 +564,7 @@ window.onresize = function () {
   }
 }
 
-function makeMaze() {
+function makeMaze () {
   // document.getElementById("mazeCanvas").classList.add("border");
   if (player !== undefined) {
     player.unbindKeyDown()

@@ -1,5 +1,6 @@
 const { test, expect, describe } = require('@jest/globals');
 const shuffle = require('../src/js/shuffle');
+// const shuffle = require('../src/js/shuffle').default;
 
 describe("shuffle", () => {
     it("should shuffle an array", () => {
